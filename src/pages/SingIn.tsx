@@ -6,8 +6,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -25,19 +23,6 @@ interface CopyrightProps extends React.HTMLAttributes<HTMLElement> {
   };
 }
 
-// function Copyright(props: CopyrightProps) {
-//   const { sx, ...other } = props;
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...other}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {sx && <span style={{ color: sx.color }}>{sx.text}</span>}
-//     </Typography>
-//   );
-// }
 
 interface RegistrationData {
   firstName: string;
@@ -45,72 +30,12 @@ interface RegistrationData {
   email: string;
   password: string;
 }
-// const [email, setEmail] = useState("");
-// const [password, setPassword] = useState("");
-
-// const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   setEmail(e.target.value);
-// };
-
-// const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   setPassword(e.target.value);
-// };
-// const onSubmit = async (data: RegistrationData) => {
-//   try {
-//     const response = await axios.post(
-//       "http://localhost:3000/api/auth/login",
-//       data,
-//       {
-//         headers: { authorization: "test-token" },
-//       }
-//     );
-
-//     const token = response.data.responseObj.token;
-//     console.log("Login successful. Token:", token);
-//     localStorage.setItem("userToken", token);
-//     alert("Login successful");
-//     setEmail("");
-//     setPassword("");
-//   } catch (error) {
-//     console.error("Error during login:", error);
-//     alert("Error during login");
-//   }
-// };
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   const handleSubmit = async (event:any) => {
-    event.preventDefault();
-    
-    const formData = new FormData(event.currentTarget);
-
-    try {
-      const response = await axios.get('/api/users/emailExists', {
-        params: { email: formData.get('email') }  
-      });
-
-      if (!response.data.exists) {
-        setError('Email not found');
-        return;
-      }
-
-      const loginResponse = await axios.post('/api/login', {
-        email: formData.get('email'),
-        password: formData.get('password')
-      });
-
-      setError('');
-      localStorage.setItem('token', loginResponse.data.token);
-      
-    } catch (err) {
-      console.error(err);
-      setError('Unable to login. Please try again later.');
-    }
 
   }
 
