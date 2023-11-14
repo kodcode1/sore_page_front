@@ -1,14 +1,11 @@
-
 import axios from "axios";
 import * as React from "react";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
+import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -16,103 +13,58 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-interface CopyrightProps extends React.HTMLAttributes<HTMLElement> {
-  sx?: {
-    mt: number;
-    mb: number;
-    text: string;
-    color?: string | undefined;
-  };
-}
-
-// function Copyright(props: CopyrightProps) {
-//   const { sx, ...other } = props;
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...other}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {sx && <span style={{ color: sx.color }}>{sx.text}</span>}
-//     </Typography>
-//   );
-// }
-
 interface RegistrationData {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
 }
-// const [email, setEmail] = useState("");
-// const [password, setPassword] = useState("");
-
-// const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   setEmail(e.target.value);
-// };
-
-// const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   setPassword(e.target.value);
-// };
-// const onSubmit = async (data: RegistrationData) => {
-//   try {
-//     const response = await axios.post(
-//       "http://localhost:3000/api/auth/login",
-//       data,
-//       {
-//         headers: { authorization: "test-token" },
-//       }
-//     );
-
-//     const token = response.data.responseObj.token;
-//     console.log("Login successful. Token:", token);
-//     localStorage.setItem("userToken", token);
-//     alert("Login successful");
-//     setEmail("");
-//     setPassword("");
-//   } catch (error) {
-//     console.error("Error during login:", error);
-//     alert("Error during login");
-//   }
-// };
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (event:any) => {
-    event.preventDefault();
-    
-    const formData = new FormData(event.currentTarget);
-
+  const handleSubmit = async () => {
     try {
-      const response = await axios.get('/api/users/emailExists', {
-        params: { email: formData.get('email') }  
-      });
+      const response = await axios.post(
+        "https://655218485c69a7790329840d.mockapi.io/users",
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+        },
+        {
+          headers: {
+            authorization: "test-token",
+          },
+        }
+      );
 
-      if (!response.data.exists) {
-        setError('Email not found');
-        return;
+      if (response.status === 200) {
+        // Registration successful
+        console.log("Registration successful:", response.data.message);
+        alert("Registration successful:");
+        setEmail("");
+        setPassword("");
+      } else if (response.status === 409) {
+        // 409 Conflict indicates that the email already exists
+        setError("Email already exists. Please choose another.");
+      } else {
+        // Registration failed for other reasons, handle errors
+        setError("Registration failed");
       }
-
-      const loginResponse = await axios.post('/api/login', {
-        email: formData.get('email'),
-        password: formData.get('password')
-      });
-
-      setError('');
-      localStorage.setItem('token', loginResponse.data.token);
-      
     } catch (err) {
-      console.error(err);
-      setError('Unable to login. Please try again later.');
+      // Handle other errors, e.g., network issues
+      console.error("Error during registration:", err);
+      setError("Unable to register, please try again later");
     }
-
-  }
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -152,6 +104,8 @@ export default function SignIn() {
                 name="first_name"
                 autoComplete="name"
                 autoFocus
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -162,6 +116,8 @@ export default function SignIn() {
                 name="last_name"
                 autoComplete="name"
                 autoFocus
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -172,6 +128,8 @@ export default function SignIn() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -182,6 +140,8 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <Button
                 type="submit"
@@ -191,6 +151,7 @@ export default function SignIn() {
               >
                 Sign In
               </Button>
+              {error && <Typography color="error">{error}</Typography>}
               <Grid container>
                 <Grid item>
                   <Link href="#" variant="body2">
