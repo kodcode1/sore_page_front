@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -11,6 +11,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
 
 type TextFields = {
   firstName: string;
@@ -21,7 +22,42 @@ type TextFields = {
 
 function SignUp() {
   const { register, handleSubmit } = useForm<TextFields>();
-  const onSubmit: SubmitHandler<TextFields> = (data) => console.log(data);
+  const [error, setError] = useState("");
+
+  const onSubmit: SubmitHandler<TextFields> = async (data) => {
+    try {
+      const response = await axios.post(
+        "https://655218485c69a7790329840d.mockapi.io/users",
+        {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          password: data.password,
+        },
+        {
+          headers: {
+            authorization: "test-token",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        // Registration successful
+        console.log("Registration successful:", response.data.message);
+        alert("Registration successful:");
+      } else if (response.status === 409) {
+        // 409 Conflict indicates that the email already exists
+        setError("Email already exists. Please choose another.");
+      } else {
+        // Registration failed for other reasons, handle errors
+        setError("Registration failed");
+      }
+    } catch (err) {
+      // Handle other errors, e.g., network issues
+      console.error("Error during registration:", err);
+      setError("Unable to register, please try again later");
+    }
+  };
 
   return (
     <ThemeProvider theme={createTheme()}>
@@ -91,6 +127,7 @@ function SignUp() {
                 />
               </Grid>
             </Grid>
+            {error && <p style={{ color: "red" }}>{error}</p>}
             <Button
               type="submit"
               fullWidth
@@ -112,4 +149,5 @@ function SignUp() {
     </ThemeProvider>
   );
 }
+
 export default SignUp;
