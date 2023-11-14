@@ -3,8 +3,6 @@ import "./App.css";
 import Category from "./pages/Category";
 import Product from "./pages/Product";
 import Layout from "./pages/Layout";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUP";
 function App() {
   return (
     <>
@@ -21,8 +19,6 @@ function App() {
         </Routes>
       </BrowserRouter>
       App
-      {/* <SignIn /> */}
-      {/* <SignUp /> */}
     </>
   );
 }
