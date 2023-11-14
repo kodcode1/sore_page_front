@@ -22,8 +22,7 @@ function App() {
       </BrowserRouter>
       App
       {/* <SignIn /> */}
-      <SignUp />
-
+      {/* <SignUp /> */}
     </>
   );
 }
