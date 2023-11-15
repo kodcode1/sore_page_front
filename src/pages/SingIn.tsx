@@ -4,14 +4,24 @@ import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+interface CopyrightProps extends React.HTMLAttributes<HTMLElement> {
+  sx?: {
+    mt: number;
+    mb: number;
+    text: string;
+    color?: string | undefined;
+  };
+}
+
 
 interface RegistrationData {
   firstName: string;
@@ -105,7 +115,7 @@ export default function SignIn() {
                 autoComplete="name"
                 autoFocus
                 value={firstName}
-                onChange={(e:any) => setFirstName(e.target.value)}
+                onChange={(e) => setFirstName(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -117,7 +127,7 @@ export default function SignIn() {
                 autoComplete="name"
                 autoFocus
                 value={lastName}
-                onChange={(e:any) => setLastName(e.target.value)}
+                onChange={(e) => setLastName(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -129,7 +139,7 @@ export default function SignIn() {
                 autoComplete="email"
                 autoFocus
                 value={email}
-                onChange={(e:any) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -141,7 +151,7 @@ export default function SignIn() {
                 id="password"
                 autoComplete="current-password"
                 value={password}
-                onChange={(e:any) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <Button
                 type="submit"
@@ -171,7 +181,7 @@ export default function SignIn() {
             backgroundImage:
               "url(https://source.unsplash.com/random?wallpapers)",
             backgroundRepeat: "no-repeat",
-            backgroundColor: (t:any) =>
+            backgroundColor: (t) =>
               t.palette.mode === "light"
                 ? t.palette.grey[50]
                 : t.palette.grey[900],

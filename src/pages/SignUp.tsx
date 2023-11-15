@@ -149,5 +149,4 @@ function SignUp() {
     </ThemeProvider>
   );
 }
-
 export default SignUp;
