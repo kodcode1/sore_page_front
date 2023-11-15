@@ -53,7 +53,7 @@ function SignUp() {
         setError("Registration failed");
       }
     } catch (err) {
-      // Handle other errors, e.g., network issues
+      // Handle other errors, network issues
       console.error("Error during registration:", err);
       setError("Unable to register, please try again later");
     }
