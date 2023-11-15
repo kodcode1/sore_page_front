@@ -13,7 +13,6 @@ function App() {
 
   return (
     <>
-  
         <CssBaseline />
         <BrowserRouter>
           <Routes>
@@ -27,7 +26,6 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-    
     </>
   );
 }
