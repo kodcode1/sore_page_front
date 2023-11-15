@@ -127,7 +127,7 @@ function SignUp() {
                 />
               </Grid>
             </Grid>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
             <Button
               type="submit"
               fullWidth

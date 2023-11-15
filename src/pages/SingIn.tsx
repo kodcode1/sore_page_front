@@ -105,7 +105,7 @@ export default function SignIn() {
                 autoComplete="name"
                 autoFocus
                 value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                onChange={(e:any) => setFirstName(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -117,7 +117,7 @@ export default function SignIn() {
                 autoComplete="name"
                 autoFocus
                 value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={(e:any) => setLastName(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -129,7 +129,7 @@ export default function SignIn() {
                 autoComplete="email"
                 autoFocus
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e:any) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -141,7 +141,7 @@ export default function SignIn() {
                 id="password"
                 autoComplete="current-password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e:any) => setPassword(e.target.value)}
               />
               <Button
                 type="submit"
@@ -171,7 +171,7 @@ export default function SignIn() {
             backgroundImage:
               "url(https://source.unsplash.com/random?wallpapers)",
             backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
+            backgroundColor: (t:any) =>
               t.palette.mode === "light"
                 ? t.palette.grey[50]
                 : t.palette.grey[900],
