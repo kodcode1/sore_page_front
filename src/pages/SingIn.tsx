@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import * as React from "react";
 import { useState } from "react";
@@ -34,10 +33,48 @@ interface RegistrationData {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (event:any) => {
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        "https://655218485c69a7790329840d.mockapi.io/users",
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+        },
+        {
+          headers: {
+            authorization: "test-token",
+          },
+        }
+      );
 
-  }
+      if (response.status === 200) {
+        // Registration successful
+        console.log("Registration successful:", response.data.message);
+        alert("Registration successful:");
+        setEmail("");
+        setPassword("");
+      } else if (response.status === 409) {
+        // 409 Conflict indicates that the email already exists
+        setError("Email already exists. Please choose another.");
+      } else {
+        // Registration failed for other reasons, handle errors
+        setError("Registration failed");
+      }
+    } catch (err) {
+      // Handle other errors, e.g., network issues
+      console.error("Error during registration:", err);
+      setError("Unable to register, please try again later");
+    }
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -77,6 +114,8 @@ export default function SignIn() {
                 name="first_name"
                 autoComplete="name"
                 autoFocus
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -87,6 +126,8 @@ export default function SignIn() {
                 name="last_name"
                 autoComplete="name"
                 autoFocus
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -97,6 +138,8 @@ export default function SignIn() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -107,6 +150,8 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <Button
                 type="submit"
@@ -116,6 +161,7 @@ export default function SignIn() {
               >
                 Sign In
               </Button>
+              {error && <Typography color="error">{error}</Typography>}
               <Grid container>
                 <Grid item>
                   <Link href="#" variant="body2">
