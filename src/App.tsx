@@ -4,8 +4,8 @@ import Home from "./pages/Home";
 import ProductPage from "./pages/ProductPage";
 import Layout from "./pages/Layout";
 import { CssBaseline } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { increment, setCategory } from "./features";
+import Cart from "./pages/Cart";
+
 
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route path="/product" element={<ProductPage />} />
-              <Route path="" element={<Home />} />
+              <Route path="/cart" element={<Cart />} />
               <Route path="" element={<Home />} />
               <Route path="" element={<Home />} />
               <Route path="" element={<Home />} />

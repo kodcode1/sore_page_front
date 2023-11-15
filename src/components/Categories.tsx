@@ -1,8 +1,8 @@
 import { Box, Button } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { increment, setCategory } from "../features/index";
+import { useDispatch } from "react-redux";
+import {  setCategory } from "../features/productReducer";
 
 const Categories = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Categories = () => {
           variant="outlined"
           onClick={() => {
             dispatch(setCategory("all"));
-            navigate("/");
+            navigate("/product");
           }}
           sx={{ color: "white" }}
         >
@@ -24,7 +24,7 @@ const Categories = () => {
           variant="outlined"
           onClick={() => {
             dispatch(setCategory("smartphones"));
-            navigate("/");
+            navigate("/product");
           }}
           sx={{ color: "white" }}
         >
@@ -34,7 +34,7 @@ const Categories = () => {
           variant="outlined"
           onClick={() => {
             dispatch(setCategory("laptops"));
-            navigate("/");
+            navigate("/product");
           }}
           sx={{ color: "white" }}
         >
