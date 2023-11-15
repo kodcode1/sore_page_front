@@ -1,9 +1,7 @@
-import React from 'react'
+// import React from "react";
 
-const Compare = () => {
-  return (
-    <div>Compare</div>
-  )
-}
+// const Compare = () => {
+//   return <div>Compare</div>;
+// };
 
-export default Compare
+// export default Compare;
