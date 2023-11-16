@@ -43,14 +43,12 @@ export default function CardLayers3d(props:ProductInterface) {
       >
         <CardCover
           sx={{
-            background:
-              'linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 300px)',
-            borderColor: '#777',
+
             backdropFilter: 'blur(1px)',
           }}
         >
         </CardCover>
-        <img src={props.images}/>
+        <img style={{height:"250px"}} src={props?.images}/>
         <CardContent
           sx={{
             alignItems: 'self-end',
@@ -59,7 +57,7 @@ export default function CardLayers3d(props:ProductInterface) {
             borderColor: '#777',
           }}
         >
-          <Typography level="h2" fontSize="lg" textColor="#fff" m={2}>
+          <Typography level="h2" fontSize="lg" textColor="#2196f3" m={2}>
             {props.title}
           </Typography>
         </CardContent>

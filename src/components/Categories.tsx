@@ -13,7 +13,7 @@ const Categories = () => {
       <Button
           variant="outlined"
           onClick={() => {
-            dispatch(setCategory("0"));
+            dispatch(setCategory("all"));
             navigate("/product");
           }}
           sx={{ color: "white" }}
