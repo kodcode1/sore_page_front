@@ -1,3 +1,4 @@
+
 import {
   AppBar,
   Box,
@@ -41,6 +42,7 @@ export default function Navbar() {
           </Typography>
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+
             <IconButton
               size="large"
               color="primary"
@@ -49,6 +51,7 @@ export default function Navbar() {
               <Badge badgeContent={1} color="error">
                 <ShoppingCartIcon />
               </Badge>
+
             </IconButton>
             <IconButton
               size="large"
