@@ -13,7 +13,7 @@ const Categories = () => {
       <Button
           variant="outlined"
           onClick={() => {
-            dispatch(setCategory("all"));
+            dispatch(setCategory("0"));
             navigate("/product");
           }}
           sx={{ color: "white" }}
@@ -23,53 +23,53 @@ const Categories = () => {
         <Button
           variant="outlined"
           onClick={() => {
-            dispatch(setCategory("smartphones"));
+            dispatch(setCategory("1"));
             navigate("/product");
           }}
           sx={{ color: "white" }}
         >
-          Smartphones
+          Clothes
         </Button>
         <Button
           variant="outlined"
           onClick={() => {
-            dispatch(setCategory("laptops"));
-            navigate("/product");
-          }}
-          sx={{ color: "white" }}
-        >
-          Laptops
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            dispatch(setCategory("electronics"));
+            dispatch(setCategory("2"));
             navigate("/product");
           }}
           sx={{ color: "white" }}
         >
           Electronics
         </Button>
-        <Button variant="outlined" onClick={() => {
-          dispatch(setCategory("fragrances"));
-          navigate("/product")}
-          } sx={{ color: "white" }}>
-          Fragrances
+        <Button
+          variant="outlined"
+          onClick={() => {
+            dispatch(setCategory("3"));
+            navigate("/product");
+          }}
+          sx={{ color: "white" }}
+        >
+          Furniture
         </Button>
         <Button variant="outlined" onClick={() => {
-          dispatch(setCategory("skincare"));
+          dispatch(setCategory("4"));
+          navigate("/product")}
+          } sx={{ color: "white" }}>
+          Shoes
+        </Button>
+        <Button variant="outlined" onClick={() => {
+          dispatch(setCategory("5"));
           navigate("/product")
           }} sx={{ color: "white" }}>
           Skincare
         </Button>
         <Button variant="outlined" onClick={() => {
-          dispatch(setCategory("groceries"));
+          dispatch(setCategory("7"));
           navigate("/product")
           }} sx={{ color: "white" }}>
-          Groceries
+          Coffee
         </Button>
         <Button variant="outlined" onClick={() =>{ 
-          dispatch(setCategory("home-decoration"));
+          dispatch(setCategory("10"));
           navigate("/product")
           }} sx={{ color: "white" }}>
           Home Decoration

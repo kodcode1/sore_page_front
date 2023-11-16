@@ -1,14 +1,9 @@
-import Categories from "../components/Categories";
-import Products from "../components/Products";
+import React from 'react'
 
-const ProductPage = () => {
-  
+function ProductPage() {
   return (
-  <div>
-    <Categories/>
-    <Products/>
-  </div>
-  );
-};
+    <div>ProductPage</div>
+  )
+}
 
-export default ProductPage;
+export default ProductPage
