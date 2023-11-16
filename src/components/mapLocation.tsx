@@ -13,27 +13,6 @@
 
 // const center = fromLonLat([-122.4194, 37.7749]);
 
-// const iconFeature = new Feature({
-//   geometry: new Point(center),
-// });
-
-// const iconStyle = new Style({
-//   image: new Icon({
-//     anchor: [0.5, 1],
-//     src: '/path/to/icon.png' 
-//   })
-// });
-
-// iconFeature.setStyle(iconStyle);
-
-// const vectorSource = new VectorSource({
-//   features: [iconFeature]
-// });
-
-// const vectorLayer = new VectorLayer({
-//   source: vectorSource
-// });
-
 // const App = () => {
 
 //   const map = new Map({

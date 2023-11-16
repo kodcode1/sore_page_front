@@ -7,13 +7,10 @@ const AccountCircle = () => {
   const navigate = useNavigate();
   const userStatus = useSelector((state) => state.user.status);
 
-  // console.log(userStatus);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    if(userStatus){
+    if (!userStatus) {
       setAnchorElUser(event.currentTarget);
     }
   };
@@ -23,10 +20,10 @@ const AccountCircle = () => {
   };
 
   const handleCloseUserMenu1 = () => {
-    navigate("/");
+    navigate("/signup");
   };
   const handleCloseUserMenu2 = () => {
-    navigate("/cart");
+    navigate("/signin");
   };
   const handleCloseUserMenu3 = () => {
     setAnchorElUser(null);
@@ -36,7 +33,7 @@ const AccountCircle = () => {
     <IconButton size="large" color="primary">
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <Avatar src="/broken-image.jpg" />{" "}
         </IconButton>
       </Tooltip>
 
@@ -61,14 +58,14 @@ const AccountCircle = () => {
             handleCloseUserMenu1();
           }}
         >
-          MenuItem 1
+          Sign up
         </MenuItem>
         <MenuItem
           onClick={() => {
             handleCloseUserMenu2();
           }}
         >
-          MenuItem 2
+          Sign in
         </MenuItem>
         <MenuItem
           onClick={() => {

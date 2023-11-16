@@ -6,6 +6,8 @@ import Layout from "./pages/Layout";
 import { CssBaseline } from "@mui/material";
 import Cart from "./pages/Cart";
 import MyMap from "./components/mapStors";
+import SignUp from "./pages/SignUp";
+import SingIn from "./pages/SingIn";
 
 
 
@@ -22,8 +24,8 @@ function App() {
               <Route path="/product" element={<ProductPage />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/map" element={<MyMap />} />
-              <Route path="" element={<Home />} />
-              <Route path="" element={<Home />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<SingIn />} />
             </Route>
           </Routes>
         </BrowserRouter>
