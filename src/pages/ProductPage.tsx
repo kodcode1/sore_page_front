@@ -1,8 +1,9 @@
 import React from 'react'
+import ProductInfo from '../components/ProductInfo'
 
 function ProductPage() {
   return (
-    <div>ProductPage</div>
+    <div><ProductInfo/></div>
   )
 }
 
