@@ -12,25 +12,27 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
+import { setStatus } from "../features/userLoginReducer";
 
-interface CopyrightProps extends React.HTMLAttributes<HTMLElement> {
-  sx?: {
-    mt: number;
-    mb: number;
-    text: string;
-    color?: string | undefined;
-  };
-}
+// interface CopyrightProps extends React.HTMLAttributes<HTMLElement> {
+//   sx?: {
+//     mt: number;
+//     mb: number;
+//     text: string;
+//     color?: string | undefined;
+//   };
+//}
 
-
-interface RegistrationData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
+// interface RegistrationData {
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   password: string;
+// }
 
 const defaultTheme = createTheme();
+const dispatch = useDispatch();
 
 export default function SignIn() {
   const [firstName, setFirstName] = useState("");
@@ -60,6 +62,8 @@ export default function SignIn() {
         // Registration successful
         console.log("Registration successful:", response.data.message);
         alert("Registration successful:");
+        dispatch(setStatus(true));
+
         setEmail("");
         setPassword("");
       } else if (response.status === 409) {

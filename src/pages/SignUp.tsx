@@ -42,18 +42,14 @@ function SignUp() {
       );
 
       if (response.status === 200) {
-        // Registration successful
         console.log("Registration successful:", response.data.message);
         alert("Registration successful:");
       } else if (response.status === 409) {
-        // 409 Conflict indicates that the email already exists
         setError("Email already exists. Please choose another.");
       } else {
-        // Registration failed for other reasons, handle errors
         setError("Registration failed");
       }
     } catch (err) {
-      // Handle other errors, network issues
       console.error("Error during registration:", err);
       setError("Unable to register, please try again later");
     }
@@ -127,7 +123,6 @@ function SignUp() {
                 />
               </Grid>
             </Grid>
-            {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
             <Button
               type="submit"
               fullWidth
