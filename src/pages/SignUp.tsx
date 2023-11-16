@@ -27,7 +27,7 @@ function SignUp() {
   const onSubmit: SubmitHandler<TextFields> = async (data) => {
     try {
       const response = await axios.post(
-        "https://655218485c69a7790329840d.mockapi.io/users",
+        "https://my-backend-project-9d14.onrender.com/api/register",
         {
           firstName: data.firstName,
           lastName: data.lastName,

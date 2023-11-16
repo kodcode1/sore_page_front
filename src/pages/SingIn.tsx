@@ -1,6 +1,5 @@
 import axios from "axios";
-import * as React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,39 +14,30 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { setStatus } from "../features/userLoginReducer";
 
-// interface CopyrightProps extends React.HTMLAttributes<HTMLElement> {
-//   sx?: {
-//     mt: number;
-//     mb: number;
-//     text: string;
-//     color?: string | undefined;
-//   };
-//}
-
-// interface RegistrationData {
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   password: string;
-// }
+interface RegistrationData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
 
 const defaultTheme = createTheme();
-const dispatch = useDispatch();
 
-export default function SignIn() {
+function SignIn() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     try {
       const response = await axios.post(
-        "https://655218485c69a7790329840d.mockapi.io/users",
+        "https://my-backend-project-9d14.onrender.com/api/login",
         {
-          firstName,
-          lastName,
           email,
           password,
         },
@@ -59,19 +49,16 @@ export default function SignIn() {
       );
 
       if (response.status === 200) {
-        // Registration successful
         console.log("Registration successful:", response.data.message);
         alert("Registration successful:");
         dispatch(setStatus(true));
 
         setEmail("");
         setPassword("");
-      } else if (response.status === 409) {
-        // 409 Conflict indicates that the email already exists
+      } else if (response.status === 404) {
         setError("Email already exists. Please choose another.");
-      } else {
-        // Registration failed for other reasons, handle errors
-        setError("Registration failed");
+      } else if (response.status === 500) {
+        setError("Server error while retrieving users");
       }
     } catch (err) {
       // Handle other errors, e.g., network issues
@@ -129,7 +116,6 @@ export default function SignIn() {
                 label="Last Name"
                 name="last_name"
                 autoComplete="name"
-                autoFocus
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
@@ -141,7 +127,6 @@ export default function SignIn() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -198,3 +183,5 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
+
+export default SignIn;
