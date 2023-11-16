@@ -1,17 +1,17 @@
-<<<<<<< HEAD
-import { AppBar, Box, Toolbar, IconButton, Typography, MenuItem, Button } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  MenuItem,
+  Button,
+  Badge,
+} from "@mui/material";
+import AccountCircleonect from "./AccountCircleIUserConect";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link, useNavigate } from "react-router-dom";
-import HomeIcon from "@mui/icons-material/Home";
-export default function Navbar() {
-  const navigate = useNavigate();
-=======
-import { AppBar, Box, Toolbar, IconButton, Typography, MenuItem, Button, Badge } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Link, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 export default function Navbar() {
   const navigate = useNavigate();
@@ -25,34 +25,39 @@ export default function Navbar() {
   //   const cart = JSON.parse(localStorage.getItem('cart') || '[]') ;
   //   setCartItems(cart.length);
   //   console.log(cart.length);
- 
+
   // }, []);
->>>>>>> main
   return (
     <Box sx={{ flexGrow: 1, minHeight: "0px" }}>
       <AppBar position="static" sx={{ background: "white" }}>
         <Toolbar sx={{ background: "" }}>
-          <Typography color="primary" variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            color="primary"
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          >
             Web Store
           </Typography>
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-<<<<<<< HEAD
-            <IconButton size="large" color="primary" onClick={() => navigate("/")}>
-              <ShoppingCartIcon />
-=======
-            <IconButton size="large" color="primary" onClick={() => navigate("/cart")}>
-            <Badge badgeContent={1} color="error">
-            <ShoppingCartIcon />
-        </Badge>
->>>>>>> main
+            <IconButton
+              size="large"
+              color="primary"
+              onClick={() => navigate("/cart")}
+            >
+              <Badge badgeContent={1} color="error">
+                <ShoppingCartIcon />
+              </Badge>
             </IconButton>
-            <IconButton size="large" color="primary" onClick={() => navigate("/")}>
+            <IconButton
+              size="large"
+              color="primary"
+              onClick={() => navigate("/")}
+            >
               <HomeIcon />
             </IconButton>
-            <IconButton size="large" color="primary" onClick={() => navigate("/")}>
-              <AccountCircleIcon />
-            </IconButton>
+            <AccountCircleonect/>
           </Box>
         </Toolbar>
       </AppBar>
