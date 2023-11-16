@@ -13,7 +13,7 @@ const AccountCircleIUserConect = () => {
   );
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    if(userStatus){
+    if(!userStatus){
       setAnchorElUser(event.currentTarget);
     }
   };
@@ -36,8 +36,7 @@ const AccountCircleIUserConect = () => {
     <IconButton size="large" color="primary">
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-        </IconButton>
+        <Avatar src="/broken-image.jpg" />        </IconButton>
       </Tooltip>
 
       <Menu
@@ -75,7 +74,7 @@ const AccountCircleIUserConect = () => {
             handleCloseUserMenu3();
           }}
         >
-          MenuItem 3
+          Sign out of the account
         </MenuItem>
       </Menu>
     </IconButton>
