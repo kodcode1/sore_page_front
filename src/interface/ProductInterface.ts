@@ -11,3 +11,10 @@ export interface ProductInterface {
     thumbnail: string
     images: string[]
     }
+    export interface Category {
+        id: number 
+        name: string
+        image: string
+        creationAt: string
+        updatedAt: string
+      }
