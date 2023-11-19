@@ -10,6 +10,7 @@ import MyMap from "./components/mapStors";
 import SignUp from "./pages/SignUp";
 import SingIn from "./pages/SingIn";
 import ProductInfo from "./components/ProductInfo";
+import ProductCompare from "./pages/ProductCompare";
 
 
 
@@ -28,7 +29,8 @@ function App() {
               <Route path="/map" element={<MyMap />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signin" element={<SingIn />} />
-              <Route path="info-product" element={<ProductInfo/>} />
+              <Route path="/info-product" element={<ProductInfo/>} />
+              <Route path="/productComparison" element={<ProductCompare/>} />
             </Route>
           </Routes>
         </BrowserRouter>
