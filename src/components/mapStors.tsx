@@ -1,97 +1,63 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "ol/ol.css";
 import Map from "ol/Map";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import View from "ol/View";
-import { fromLonLat } from "ol/proj";
+import { Coordinate } from "ol/coordinate";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
-import VectorSource from "ol/source/Vector";
+import { Icon, Style } from "ol/style";
 import VectorLayer from "ol/layer/Vector";
-import Icon from "ol/style/Icon";
-import Style from "ol/style/Style";
-import { Coordinate } from "ol/coordinate";
+import VectorSource from "ol/source/Vector";
+import markerIcon from "../pngegg.png"; // כתובת התמונה שלך
 
-const center: Coordinate = fromLonLat([3921798.591393487, 3733816.7176443543]);
-
-const iconFeature = new Feature({
-  geometry: new Point(center),
-});
-
-const iconStyle = new Style({
-  image: new Icon({
-    anchor: [0.5, 1],
-    src: "../icon.svg",
-  }),
-});
-
-iconFeature.setStyle(iconStyle);
-
-const vectorSource = new VectorSource({
-  features: [iconFeature],
-});
-
-const vectorLayer = new VectorLayer({
-  source: vectorSource,
-});
-
-const coordinate1: Coordinate = fromLonLat([3921798.591393487 + 0.1, 3733816.7176443543]);
-const coordinate2: Coordinate = fromLonLat([3921798.591393487 - 0.1, 3733816.7176443543]);
-
-const iconFeature1 = new Feature({
-  geometry: new Point(coordinate1),
-});
-
-const iconFeature2 = new Feature({
-  geometry: new Point(coordinate2),
-});
-
-function MyMap(): JSX.Element {
+function MapStors(): JSX.Element {
   const mapRef = useRef<HTMLDivElement>(null);
   const [currentZoom, setCurrentZoom] = useState<number>(7.5);
   const [map, setMap] = useState<Map | null>(null);
   const [mouseCoordinatesClick, setMouseCoordinatesClick] = useState<Coordinate | null>(null);
-  const iconStyle1 = new Style({
-    image: new Icon({
-      anchor: [0.5, 1],
-      src: "../icon.svg",
-    }),
-  });
-
-  const iconStyle2 = new Style({
-    image: new Icon({
-      anchor: [0.5, 1],
-      src: "../icon.svg",
-    }),
-  });
-  iconFeature1.setStyle(iconStyle1);
-  iconFeature2.setStyle(iconStyle2);
-  const vectorSourceAdditional = new VectorSource({
-    features: [iconFeature1, iconFeature2],
-  });
-
-  const vectorLayerAdditional = new VectorLayer({
-    source: vectorSourceAdditional,
-  });
 
   useEffect(() => {
     const mapInstance = new Map({
       target: mapRef.current!,
-      layers: [new TileLayer({ source: new OSM() }), vectorLayer, vectorLayerAdditional],
+      layers: [new TileLayer({ source: new OSM() })],
       view: new View({
         center: [3921798.591393487, 3733816.7176443543],
         zoom: currentZoom,
       }),
     });
 
-    // mapInstance.on("click", (event) => {
-    //   const view = mapInstance.getView();
-    //   const coordinate = event.coordinate as Coordinate;
-    //   view.setCenter(coordinate);
-    //   setCurrentZoom((prevZoom) => prevZoom + 0.5);
-    //   setMouseCoordinatesClick(coordinate);
-    // });
+    mapInstance.on("click", (event) => {
+      const view = mapInstance.getView();
+      const coordinate = event.coordinate as Coordinate;
+      view.setCenter(coordinate);
+      setCurrentZoom((prevZoom) => prevZoom + 0.5);
+      setMouseCoordinatesClick(coordinate);
+
+      const marker = new Feature({
+        geometry: new Point(coordinate),
+      });
+
+      const markerStyle = new Style({
+        image: new Icon({
+          anchor: [0.5, 1],
+          anchorXUnits: "fraction",
+          anchorYUnits: "fraction",
+          src: markerIcon,
+        }),
+      });
+
+      marker.setStyle(markerStyle);
+
+      const markerLayer = new VectorLayer({
+        source: new VectorSource({
+          features: [marker],
+        }),
+      });
+
+      mapInstance.addLayer(markerLayer);
+    });
 
     setMap(mapInstance);
 
@@ -111,10 +77,10 @@ function MyMap(): JSX.Element {
             {mouseCoordinatesClick ? mouseCoordinatesClick.join(", ") : ""}
           </div>
         </div>
-        <div id="map" ref={mapRef} style={{ width: "100%", height: "800px" }}></div>
+        <div id="map" ref={mapRef} style={{ width: "100%", height: "87vh" }}></div>
       </div>
     </div>
   );
 }
 
-export default MyMap;
+export default MapStors;

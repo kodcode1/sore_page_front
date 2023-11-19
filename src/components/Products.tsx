@@ -16,9 +16,9 @@ const Products = () => {
   const [cart, setCart] = useState<ProductInterface[]>([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userStatus = useSelector((state) => state.user.status);
 
   const handleAddToCart = (event, product: ProductInterface) => {
-    // Stop the event propagation to prevent it from reaching the parent elements
     event.stopPropagation();
 
     let cart_: ProductInterface[] = [];
