@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ProductInterface } from "../interface/ProductInterface";
 
 
 
 const initialState = {
     value: 0,
-    categoryChoose: ""
+    categoryChoose: "",
+    currentProduct:{}
 }
 
 const productSlice = createSlice({
@@ -13,9 +15,12 @@ const productSlice = createSlice({
   reducers: {
     setCategory: (state, action) => {
         state.categoryChoose = action.payload
-    }
+    },
+    setProduct: (state, action) => {
+      state.currentProduct = action.payload
+  }
   },
 });
 
-export const { setCategory } = productSlice.actions;
+export const { setCategory,setProduct } = productSlice.actions;
 export default productSlice.reducer;

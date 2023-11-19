@@ -1,41 +1,57 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-//import { Link , useNavigate} from "react-router-dom";
-import { ProductInterface } from "../interface/ProductInterface";
-import { CardContent, Typography, Grid, Tooltip, Fab, Stack, Rating, IconButton } from "@mui/material";
+import { CardContent, Typography, Grid, Tooltip, Fab, Stack, Rating, IconButton, CardActionArea } from "@mui/material";
 import BlankCard from "./BlankCard";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { setProduct } from "../features/productReducer";
+import { useDispatch } from "react-redux";
+import { ProductInterface } from "../interface/ProductInterface";
+
+const placeholderImageUrl = "https://www.britax-romer.co.uk/on/demandware.static/Sites-Britax-UK-Site/-/default/dw975b844e/images/britax/PlaceholderProductImage.jpg";
 
 const Products = () => {
-  const [products, setProducts] = useState<ProductInterface>();
+  const [products, setProducts] = useState<ProductInterface[]>([]);
   const [cart, setCart] = useState<ProductInterface[]>([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleAddToCart = (product: ProductInterface) => {
+  const handleAddToCart = (event, product: ProductInterface) => {
+    // Stop the event propagation to prevent it from reaching the parent elements
+    event.stopPropagation();
+
     let cart_: ProductInterface[] = [];
-    let tempCart: ProductInterface[];
-    if (cart.length == 0) {
+    if (cart.length === 0) {
       cart_ = JSON.parse(localStorage.getItem("cart") || "[]");
     }
     cart_ = [...cart_, ...cart, product];
     setCart(cart_);
     localStorage.setItem("cart", JSON.stringify(cart_));
   };
-  
+
   const category = useSelector((state) => state.product.categoryChoose);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("https://dummyjson.com/products");
-      const products: ProductInterface = response.data.products;
-      setProducts(products);
+      try {
+        let response;
+        console.log(category);
+        if (category === "all") {
+          response = await axios.get("https://my-backend-project-9d14.onrender.com/api/products");
+        } else {
+          response = await axios.get(`https://my-backend-project-9d14.onrender.com/api/categories/${category}`);
+        }
+        const productsData: ProductInterface[] = response.data;
+        setProducts(productsData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Handle the error here, you can set an error state or display a message to the user.
+      }
     };
 
     fetchData();
-  }, []);
-
-  //const navigate = useNavigate();
-  console.log(category);
+  }, [category]);
 
   return (
     <>
@@ -44,43 +60,51 @@ const Products = () => {
           {Array.isArray(products) &&
             products.map((product, index) => (
               <Grid item sm={12} md={4} lg={3} key={index}>
-                <BlankCard>
-                  {/* <Typography component={Link} to="/"> */}
-                  <Typography>
-                    <img src={product.images[0]} alt="img" width="100%" height="350px" />
-                  </Typography>
-                  <Tooltip title="Add To Cart">
-                    <IconButton
-                      size="small"
-                      color="primary"
-                      sx={{
-                        bottom: "75px",
-                        right: "15px",
-                        position: "absolute",
-                        background: "#3f51b5",
-                        color: "white",
-                        "&:hover": {
-                          background: "green",
-                        },
-                      }}
-                      onClick={() => handleAddToCart(product)}
-                    >
-                      <AddShoppingCartIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <CardContent sx={{ p: 3, pt: 2 }}>
-                    <Typography variant="h6">{product.title}</Typography>
-                    <Stack direction="row" alignItems="center" justifyContent="space-between" mt={1}>
-                      <Stack direction="row" alignItems="center">
-                        <Typography variant="h6">${product.price}</Typography>
-                        <Typography color="textSecondary" ml={1} sx={{ textDecoration: "line-through" }}>
-                          ${product.salesPrice}
-                        </Typography>
+                <CardActionArea
+                  onClick={() => {
+                    dispatch(setProduct(product));
+                    navigate("/info-product");
+                  }}
+                >
+                  <BlankCard>
+                    <Typography>
+                      <img src={product.images[0] || placeholderImageUrl} alt="img" width="100%" height="350px" />
+                    </Typography>
+                    <Tooltip title="Add To Cart">
+                      <IconButton
+                        size="small"
+                        color="primary"
+                        sx={{
+                          bottom: "75px",
+                          right: "15px",
+                          position: "absolute",
+                          background: "#3f51b5",
+                          color: "white",
+                          "&:hover": {
+                            background: "green",
+                          },
+                        }}
+                        onClick={(event) => handleAddToCart(event, product)}
+                      >
+                        <AddShoppingCartIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <CardContent sx={{ p: 3, pt: 2 }}>
+                      <Typography variant="h6">{product.title}</Typography>
+                      <Stack direction="row" alignItems="center" justifyContent="space-between" mt={1}>
+                        <Stack direction="row" alignItems="center">
+                          <Typography variant="h6">${product.price}</Typography>
+                          {product.salesPrice && (
+                            <Typography color="textSecondary" ml={1} sx={{ textDecoration: "line-through" }}>
+                              ${product.salesPrice}
+                            </Typography>
+                          )}
+                        </Stack>
+                        <Rating name="read-only" size="small" value={product.rating} readOnly />
                       </Stack>
-                      <Rating name="read-only" size="small" value={product.rating} readOnly />
-                    </Stack>
-                  </CardContent>
-                </BlankCard>
+                    </CardContent>
+                  </BlankCard>
+                </CardActionArea>
               </Grid>
             ))}
         </Grid>
