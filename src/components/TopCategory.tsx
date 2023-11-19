@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import CardLayers3d from "./CardLayers3d";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Category } from "../interface/ProductInterface";
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCategory } from "../features/productReducer";
-import CardLayers3d from "./CardLayers3d";
 
 function TopCategory() {
   const [topCat, setTopCat] = useState<Category[] | undefined>();

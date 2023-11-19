@@ -17,9 +17,12 @@ const Products = () => {
   const [count, setCount] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userStatus = useSelector((state) => state.user.status);
+
 
   const handleAddToCart = (event: React.MouseEvent, product: ProductInterface) => {
    
+
     event.stopPropagation();
 
     let cart_: ProductInterface[] = [];
