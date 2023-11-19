@@ -10,6 +10,7 @@
         creationAt: string
         updatedAt: string
         category: Category
+        salesPrice?: number;
       }
       
       export interface Category {
