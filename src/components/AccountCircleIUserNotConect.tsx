@@ -67,13 +67,13 @@ const AccountCircle = () => {
         >
           Sign in
         </MenuItem>
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             handleCloseUserMenu3();
           }}
-        >
-          MenuItem 3
-        </MenuItem>
+        > */}
+          {/* MenuItem 3
+        </MenuItem> */}
       </Menu>
     </IconButton>
   );

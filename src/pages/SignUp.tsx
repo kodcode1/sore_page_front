@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 type TextFields = {
   firstName: string;
@@ -23,6 +24,7 @@ type TextFields = {
 function SignUp() {
   const { register, handleSubmit } = useForm<TextFields>();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<TextFields> = async (data) => {
     try {
@@ -43,7 +45,7 @@ function SignUp() {
 
       if (response.status === 200) {
         console.log("Registration successful:", response.data.message);
-        alert("Registration successful:");
+        navigate(-1);
       } else if (response.status === 409) {
         setError("Email already exists. Please choose another.");
       } else {
@@ -73,62 +75,22 @@ function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit(onSubmit)}
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  {...register("firstName")}
-                />
+                <TextField autoComplete="given-name" required fullWidth id="firstName" label="First Name" autoFocus {...register("firstName")} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  autoComplete="family-name"
-                  {...register("lastName")}
-                />
+                <TextField required fullWidth id="lastName" label="Last Name" autoComplete="family-name" {...register("lastName")} />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  autoComplete="email"
-                  {...register("email")}
-                />
+                <TextField required fullWidth id="email" label="Email Address" autoComplete="email" {...register("email")} />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  {...register("password")}
-                />
+                <TextField required fullWidth label="Password" type="password" id="password" autoComplete="new-password" {...register("password")} />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
