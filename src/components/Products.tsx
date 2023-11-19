@@ -5,20 +5,24 @@ import BlankCard from "./BlankCard";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { setProduct } from "../features/productReducer";
+import { setProduct,setProductCompare ,ProductReducer } from "../features/productReducer";
 import { useDispatch } from "react-redux";
 import { ProductInterface } from "../interface/ProductInterface";
-
+import BarChartIcon from '@mui/icons-material/BarChart';
 const placeholderImageUrl = "https://www.britax-romer.co.uk/on/demandware.static/Sites-Britax-UK-Site/-/default/dw975b844e/images/britax/PlaceholderProductImage.jpg";
 
 const Products = () => {
   const [products, setProducts] = useState<ProductInterface[]>([]);
   const [cart, setCart] = useState<ProductInterface[]>([]);
+  const [count, setCount] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userStatus = useSelector((state) => state.user.status);
 
-  const handleAddToCart = (event, product: ProductInterface) => {
+
+  const handleAddToCart = (event: React.MouseEvent, product: ProductInterface) => {
+   
+
     event.stopPropagation();
 
     let cart_: ProductInterface[] = [];
@@ -29,6 +33,16 @@ const Products = () => {
     setCart(cart_);
     localStorage.setItem("cart", JSON.stringify(cart_));
   };
+
+  const handleSelectProduct = (event: React.MouseEvent, product: ProductInterface) => {
+      event.stopPropagation();
+      setCount((count) => count +=1)
+      dispatch(setProductCompare(product));
+      if ( count === 2) {
+        navigate("/productComparison");
+      }
+    };
+
 
   const category = useSelector((state) => state.product.categoryChoose);
 
@@ -46,7 +60,7 @@ const Products = () => {
         setProducts(productsData);
       } catch (error) {
         console.error("Error fetching data:", error);
-        // Handle the error here, you can set an error state or display a message to the user.
+       
       }
     };
 
@@ -84,9 +98,28 @@ const Products = () => {
                             background: "green",
                           },
                         }}
-                        onClick={(event) => handleAddToCart(event, product)}
+                        onClick={(event) => {handleAddToCart(event, product)}}
                       >
                         <AddShoppingCartIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Add To Cart">
+                      <IconButton
+                        size="small"
+                        color="primary"
+                        sx={{
+                          bottom: "75px",
+                          right: "60px",
+                          position: "absolute",
+                          background: "#3f51b5",
+                          color: "white",
+                          "&:hover": {
+                            background: "green",
+                          },
+                        }}
+                        onClick={(event) => handleSelectProduct(event, product)}
+                      >
+                        <BarChartIcon />
                       </IconButton>
                     </Tooltip>
                     <CardContent sx={{ p: 3, pt: 2 }}>
