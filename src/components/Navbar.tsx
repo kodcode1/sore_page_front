@@ -5,22 +5,19 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import MyMap from "./mapStors";
+import MapStors from "./MapStors";
+import AccountCircleIUserConect from "./AccountCircleIUserConect";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
 export default function Navbar() {
   const navigate = useNavigate();
 
-  // interface CartItem {
-  //   id: string;
-  // }
-  // const [cartItems, setCartItems] = useState<number>(0);
+  const [statusUser, setStatusUser] = useState(false);
+  const userStatus = useSelector((state) => state.user.status);
 
-  // useEffect(() => {
-  //   const cart = JSON.parse(localStorage.getItem('cart') || '[]') ;
-  //   setCartItems(cart.length);
-  //   console.log(cart.length);
-
-  // }, []);
+  useEffect(() => {
+    setStatusUser(userStatus);
+  }, [userStatus]);
   return (
     <Box sx={{ flexGrow: 1, minHeight: "0px" }}>
       <AppBar position="static" sx={{ background: "white" }}>
@@ -30,8 +27,8 @@ export default function Navbar() {
           </Typography>
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" color="primary" onClick={() => navigate("/map")}>
-              <Badge badgeContent={1} color="error">
+            <IconButton size="large" color="primary" onClick={() => navigate("/mapStors")}>
+              <Badge color="error">
                 <LocationOnIcon />
               </Badge>
             </IconButton>
@@ -43,7 +40,8 @@ export default function Navbar() {
             <IconButton size="large" color="primary" onClick={() => navigate("/")}>
               <HomeIcon />
             </IconButton>
-            <AccountCircleonect />
+            {statusUser || <AccountCircleonect />}
+            {statusUser && <AccountCircleIUserConect />}
           </Box>
         </Toolbar>
       </AppBar>

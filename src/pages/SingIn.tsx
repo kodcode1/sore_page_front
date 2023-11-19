@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { setStatus } from "../features/userLoginReducer";
+import { useNavigate } from "react-router-dom";
 
 interface RegistrationData {
   firstName: string;
@@ -30,10 +31,10 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
       const response = await axios.post(
         "https://my-backend-project-9d14.onrender.com/api/login",
@@ -49,19 +50,15 @@ function SignIn() {
       );
 
       if (response.status === 200) {
-        console.log("Registration successful:", response.data.message);
-        alert("Registration successful:");
+        console.log("Registration successful:");
         dispatch(setStatus(true));
-
-        setEmail("");
-        setPassword("");
+        navigate(-1);
       } else if (response.status === 404) {
         setError("Email already exists. Please choose another.");
       } else if (response.status === 500) {
         setError("Server error while retrieving users");
       }
     } catch (err) {
-      // Handle other errors, e.g., network issues
       console.error("Error during registration:", err);
       setError("Unable to register, please try again later");
     }
@@ -69,11 +66,7 @@ function SignIn() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid
-        container
-        component="main"
-        sx={{ height: "100vh", padding: "20px" }}
-      >
+      <Grid container component="main" sx={{ height: "100vh", padding: "20px" }}>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -90,12 +83,7 @@ function SignIn() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -108,28 +96,8 @@ function SignIn() {
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="last_name"
-                label="Last Name"
-                name="last_name"
-                autoComplete="name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <TextField margin="normal" required fullWidth id="last_name" label="Last Name" name="last_name" autoComplete="name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+              <TextField margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
               <TextField
                 margin="normal"
                 required
@@ -142,12 +110,7 @@ function SignIn() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
+              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Sign In
               </Button>
               {error && <Typography color="error">{error}</Typography>}
@@ -167,13 +130,9 @@ function SignIn() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage:
-              "url(https://source.unsplash.com/random?wallpapers)",
+            backgroundImage: "url(https://source.unsplash.com/random?wallpapers)",
             backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
+            backgroundColor: (t) => (t.palette.mode === "light" ? t.palette.grey[50] : t.palette.grey[900]),
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

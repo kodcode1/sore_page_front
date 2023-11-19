@@ -1,19 +1,46 @@
 import React from "react";
-import { IconButton, Tooltip, Avatar, Menu, MenuItem } from "@mui/material";
+import { IconButton, Tooltip, Avatar, Menu, MenuItem, Badge, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setStatus } from "../features/userLoginReducer";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    backgroundColor: "#44b700",
+    color: "#44b700",
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    "&::after": {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      borderRadius: "50%",
+      animation: "ripple 1.2s infinite ease-in-out",
+      border: "1px solid currentColor",
+      content: '""',
+    },
+  },
+  "@keyframes ripple": {
+    "0%": {
+      transform: "scale(.8)",
+      opacity: 1,
+    },
+    "100%": {
+      transform: "scale(2.4)",
+      opacity: 0,
+    },
+  },
+}));
 
 const AccountCircleIUserConect = () => {
   const navigate = useNavigate();
   const userStatus = useSelector((state) => state.user.status);
-
-  // console.log(userStatus);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const dispatch = useDispatch();
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    if(!userStatus){
+    if (userStatus) {
       setAnchorElUser(event.currentTarget);
     }
   };
@@ -24,19 +51,15 @@ const AccountCircleIUserConect = () => {
 
   const handleCloseUserMenu1 = () => {
     navigate("/");
-  };
-  const handleCloseUserMenu2 = () => {
-    navigate("/cart");
-  };
-  const handleCloseUserMenu3 = () => {
-    setAnchorElUser(null);
+    dispatch(setStatus(false));
   };
 
   return (
-    <IconButton size="large" color="primary">
+    <StyledBadge overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }} variant="dot">
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-        <Avatar src="/broken-image.jpg" />        </IconButton>
+          <Avatar src="/broken-image.jpg" />
+        </IconButton>
       </Tooltip>
 
       <Menu
@@ -55,29 +78,9 @@ const AccountCircleIUserConect = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <MenuItem
-          onClick={() => {
-            handleCloseUserMenu1();
-          }}
-        >
-          MenuItem 1
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleCloseUserMenu2();
-          }}
-        >
-          MenuItem 2
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleCloseUserMenu3();
-          }}
-        >
-          Sign out of the account
-        </MenuItem>
+        <MenuItem onClick={handleCloseUserMenu1}>Sign out</MenuItem>
       </Menu>
-    </IconButton>
+    </StyledBadge>
   );
 };
 
