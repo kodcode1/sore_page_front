@@ -8,7 +8,7 @@ const ProductCompare: React.FC<Props> = () => {
   let products: ProductInterface[] =  useSelector((state) => state.product.productCompare);
   return (
     <Grid sx={{padding:"40px"}} container spacing={3}>
-      {products.map(product => (
+      {products.map(product => ( 
         <Grid  sx={{padding:"40px"}} item xs={4} key={product.id}>
           <Paper sx={{textAlign:"center" }} >
             <img  width={200} src={product.images[0]} alt={product.title} />
